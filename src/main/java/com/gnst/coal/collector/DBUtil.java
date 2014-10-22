@@ -24,9 +24,15 @@ public class DBUtil {
 	private String user = "root";
 	private String pass = "root";
 
-	public DBUtil() throws Exception {
-		Class.forName(driver);
-		conn = DriverManager.getConnection(url, user, pass);
+	public DBUtil() {
+		try {
+			Class.forName(driver);
+			conn = DriverManager.getConnection(url, user, pass);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void execute(String sql) {

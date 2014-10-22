@@ -1,6 +1,5 @@
 package com.gnst.coal.collector.jiaoyi;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,11 +8,18 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import com.gnst.coal.collector.DBUtil;
+
 /**
  * @author burns
  * 
  */
-public class Cankao {
+public class JiaoyiService {
+	DBUtil dbUtil;
+
+	public JiaoyiService(DBUtil db) {
+		dbUtil = db;
+	}
 
 	/**
 	 * 解析东北亚煤炭交易信息
@@ -34,13 +40,11 @@ public class Cankao {
 	 *            页码
 	 * @param pageSize
 	 *            每页显示记录数 默认为10条，前台传过来的
-	 * @throws IOException
+	 * @throws Exception
 	 */
-	public Page getGq(Integer gqmarked, String dl, Integer czbegin,
+	public void getGq(Integer gqmarked, String dl, Integer czbegin,
 			Integer czend, String sm, String qhadd, Integer pageNum,
-			Integer pageSize) throws IOException {
-		Page page = new Page();
-		page.setPageNum(pageNum);
+			Integer pageSize) throws Exception {
 		Document doc = Jsoup
 				.connect("http://jy.cctd.com.cn/exlm/lmptGq.do")
 				.data("gqmarked", String.valueOf(gqmarked))
@@ -53,10 +57,7 @@ public class Cankao {
 				.data("baosteel_page_no", "10").timeout(60000).post();
 		String[] fanye = doc.getElementsByClass("fanye").get(0).html()
 				.replaceAll("&nbsp;", "").split("：");
-		page.setTotalNum(Integer.valueOf(fanye[1].substring(0,
-				fanye[1].indexOf("条")).trim()));
-		page.setTotalPages(Integer.valueOf(fanye[2].substring(0,
-				fanye[2].indexOf("页")).trim()));
+
 		Element tbody = doc.getElementsByTag("tbody").get(0);
 		Elements trs = tbody.getElementsByTag("tr");
 		List<Product> list = new ArrayList<Product>();
@@ -78,10 +79,9 @@ public class Cankao {
 					.attr("href").split("'");
 
 			rec.setId(urls[1]);
-			list.add(rec);
+			ProductDetail detail = findById(rec.getId());
 		}
-		page.setDatas(list);
-		return page;
+
 	}
 
 	/**
@@ -93,14 +93,18 @@ public class Cankao {
 	 * @throws Exception
 	 */
 	public ProductDetail findById(String id) throws Exception {
-		Document doc = Jsoup
-				.connect(
-						"http://jy.cctd.com.cn/exlm/l-0-b/lmptSpInfo.do?method=docontent&gpls="
-								+ id).timeout(60000).get();
+		String url = "http://jy.cctd.com.cn/exlm/l-0-b/lmptSpInfo.do?method=docontent&gpls="
+				+ id;
+		Document doc = Jsoup.connect(url).timeout(60000).get();
 		ProductDetail detail = new ProductDetail();
 		detail.setId(id);
-		Elements tableList = doc.getElementsByClass("dian_right").get(0)
-				.children();
+		Elements tableList = null;
+		try {
+			tableList = doc.getElementsByClass("dian_right").get(0).children();
+		} catch (Exception e) {
+			System.out.println("该商品有问题：" + url);
+			return null;
+		}
 		// 解析商品信息
 		Element product = tableList.get(0).getElementsByTag("tbody").get(0)
 				.getElementsByTag("tr").get(1);
@@ -185,6 +189,76 @@ public class Cankao {
 				.html());
 		detail.setFax(contactsLi.get(3).getElementsByTag("b").get(0).html());
 		detail.setEmail(contactsLi.get(4).getElementsByTag("b").get(0).html());
+		String sql = "insert into jiaoyi(id,productName,mz,supplyCount,validityDate,fbDate,sdjdwfrl,sxfd,hffsdj,qlsdj,hfsdj,qsf,ns,njzs,"
+				+ "jzchd,sn,jiaohuodi,jiagefangshi,jiage"
+				+ ",jiaohuofangshi,jiaohuoqijian,zuididinghuoliang,jingyanjigou,fukuanfangshi,"
+				+ "jiesuanfangshi,descript,companyName,addr,contacts,tel,phoneNum,fax,email) values('"
+				+ detail.getId()
+				+ "','"
+				+ detail.getProductName()
+				+ "','"
+				+ detail.getMz()
+				+ "','"
+				+ detail.getSupplyCount()
+				+ "','"
+				+ detail.getValidityDate()
+				+ "','"
+				+ detail.getFbDate()
+				+ "','"
+				+ detail.getSdjdwfrl()
+				+ "','"
+				+ detail.getSxfd()
+				+ "','"
+				+ detail.getHffsdj()
+				+ "','"
+				+ detail.getQlsdj()
+				+ "','"
+				+ detail.getHfsdj()
+				+ "','"
+				+ detail.getQsf()
+				+ "','"
+				+ detail.getNs()
+				+ "','"
+				+ detail.getNjzs()
+				+ "','"
+				+ detail.getJzchd()
+				+ "','"
+				+ detail.getSn()
+				+ "','"
+				+ detail.getJiaohuodi()
+				+ "','"
+				+ detail.getJiagefangshi()
+				+ "','"
+				+ detail.getJiage()
+				+ "','"
+				+ detail.getJiaohuofangshi()
+				+ "','"
+				+ detail.getJiaohuoqijian()
+				+ "','"
+				+ detail.getZuididinghuoliang()
+				+ "','"
+				+ detail.getJingyanjigou()
+				+ "','"
+				+ detail.getFukuanfangshi()
+				+ "','"
+				+ detail.getJiesuanfangshi()
+				+ "','"
+				+ detail.getDescript()
+				+ "','"
+				+ detail.getCompanyName()
+				+ "','"
+				+ detail.getAddr()
+				+ "','"
+				+ detail.getContacts()
+				+ "','"
+				+ detail.getTel()
+				+ "','"
+				+ detail.getPhoneNum()
+				+ "','" + detail.getFax() + "','" + detail.getEmail()
+
+				+ "')";
+		System.out.println(sql);
+		dbUtil.execute(sql);
 		return detail;
 	}
 }

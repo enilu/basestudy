@@ -1,7 +1,5 @@
 package com.gnst.coal.collector.jiaoyi;
 
-package com.gnst.service.chinaCoalFlow;
-
 /**
  * 交易详情
  * 

@@ -12,11 +12,14 @@ import com.gnst.coal.collector.DBUtil;
  * 
  */
 public class Jiaoyi {
-	private static DBUtil dbUtil;
 
 	public static void main(String[] args) throws Exception {
-		dbUtil = new DBUtil();
-
+		DBUtil db = new DBUtil();
+		JiaoyiService ck = new JiaoyiService(db);
+		for (int pageNum = 1; pageNum <= 6; pageNum++) {
+			ck.getGq(-1, null, null, null, null, null, pageNum, 10);
+		}
+		db.close();
 	}
 
 }
