@@ -12,9 +12,9 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 /**
- * ĞÅÏ¢²É¼¯Ö÷Àà
+ * ä¿¡æ¯é‡‡é›†ä¸»ç±»
  * <p>
- * 2014Äê9ÔÂ23ÈÕ
+ * 2014å¹´9æœˆ23æ—¥
  * 
  * @author enilu(82552623@qq.com)
  * 
@@ -23,7 +23,7 @@ public class Main {
 	String sessionId = "ASP.NET_SessionId";
 	String cookie = "";
 	String baseurl = "http://mkxkz.chinasafety.gov.cn/";
-	String successKey = "Ãº¿ó°²È«Éú²úĞí¿ÉÖ¤×ÛºÏ¹ÜÀíÊı¾İ¿â";
+	String successKey = "ç…¤çŸ¿å®‰å…¨ç”Ÿäº§è®¸å¯è¯ç»¼åˆç®¡ç†æ•°æ®åº“";
 	static DBUtil db = null;
 
 	public static void main(String[] args) throws Exception {
@@ -32,7 +32,7 @@ public class Main {
 		if (main.login()) {
 			main.collector();
 			// main.checkCollector();
-			// main.collectorDetail("150206272008£±£³£³£±£±£±£±£±£±£±");
+			// main.collectorDetail("150206272008ï¼‘ï¼“ï¼“ï¼‘ï¼‘ï¼‘ï¼‘ï¼‘ï¼‘ï¼‘");
 
 		}
 		db.close();
@@ -40,7 +40,7 @@ public class Main {
 	}
 
 	/**
-	 * µÇÂ¼ÏµÍ³
+	 * ç™»å½•ç³»ç»Ÿ
 	 * 
 	 * @return
 	 * @throws Exception
@@ -60,7 +60,7 @@ public class Main {
 				.method(Method.POST).timeout(200000).execute();
 		Document doc = response.parse();
 		String msg = doc.title();
-		if (!"µÇÂ¼".equals(msg)) {
+		if (!"ç™»å½•".equals(msg)) {
 			cookie = response.cookie(sessionId);
 			return true;
 		}
@@ -73,7 +73,7 @@ public class Main {
 	}
 
 	/**
-	 * ²É¼¯È«²¿Ãº¿óÊı¾İ£º¹²12073
+	 * é‡‡é›†å…¨éƒ¨ç…¤çŸ¿æ•°æ®ï¼šå…±12073
 	 * 
 	 * @throws Exception
 	 */
@@ -173,7 +173,7 @@ public class Main {
 	}
 
 	/**
-	 * ¼ì²éÊı¾İ¿âÖĞ·Ç·¨µÄÊı¾İ£¬ÖØĞÂ²É¼¯¸üĞÂÖ®
+	 * æ£€æŸ¥æ•°æ®åº“ä¸­éæ³•çš„æ•°æ®ï¼Œé‡æ–°é‡‡é›†æ›´æ–°ä¹‹
 	 * 
 	 * @throws Exception
 	 */
@@ -187,7 +187,7 @@ public class Main {
 	}
 
 	/**
-	 * ¸ù¾İid²É¼¯Ãº¿ó¾ßÌåĞÅÏ¢
+	 * æ ¹æ®idé‡‡é›†ç…¤çŸ¿å…·ä½“ä¿¡æ¯
 	 * 
 	 * @param id
 	 * @throws Exception
@@ -196,69 +196,69 @@ public class Main {
 		String url = baseurl + "infoQuery/MineInfo.aspx?mineid=" + id;
 		Document doc = Jsoup.connect(url).cookie(sessionId, cookie)
 				.timeout(100000).get();
-		String mc = doc.getElementById("td_MineName").text();// Ãº¿óÃû³Æ';
-		String zuobiao = doc.getElementById("td_MineXYZ").text();// Ö÷¾®¿Ú×ø±ê';
-		String fuzerenl = doc.getElementById("td_MineFrdb").text();// Ö÷Òª¸ºÔğÈË';
-		String leibie = doc.getElementById("td_MineJjlx").text();// Ãº¿óÀà±ğ';
-		String dianhua = doc.getElementById("td_MineTel").text();// ÁªÏµµç»°';
-		String youbian = doc.getElementById("td_MinePostalCode").text();// ÓÊÕş±àÂë';
-		String dizhi = doc.getElementById("td_MineAddress").text();// ÏêÏ¸µØÖ·';
+		String mc = doc.getElementById("td_MineName").text();// ç…¤çŸ¿åç§°';
+		String zuobiao = doc.getElementById("td_MineXYZ").text();// ä¸»äº•å£åæ ‡';
+		String fuzerenl = doc.getElementById("td_MineFrdb").text();// ä¸»è¦è´Ÿè´£äºº';
+		String leibie = doc.getElementById("td_MineJjlx").text();// ç…¤çŸ¿ç±»åˆ«';
+		String dianhua = doc.getElementById("td_MineTel").text();// è”ç³»ç”µè¯';
+		String youbian = doc.getElementById("td_MinePostalCode").text();// é‚®æ”¿ç¼–ç ';
+		String dizhi = doc.getElementById("td_MineAddress").text();// è¯¦ç»†åœ°å€';
 
-		String zhuangtai = doc.getElementById("td_MineState").text();// Ãº¿ó×´Ì¬';
-		String mksjscnl = doc.getElementById("td_MineSj").text();// Ãº¿óÉè¼ÆÉú²úÄÜÁ¦';
-		String mkhdscnl = doc.getElementById("td_MineHd").text();// Ãº¿óºË¶¨Éú²úÄÜÁ¦';
-		String mksykccl = doc.getElementById("td_MineRemain").text();// Ãº¿óÊ£Óà¿É²É´¢Á¿';
-		String mktcsj = doc.getElementById("td_MinePTime").text();// Ãº¿óÍ¶²úÊ±¼ä';
-		String ktfs = doc.getElementById("td_MineOpening").text();// ¿ªÍØ·½Ê½';
-		String kcmc = doc.getElementById("td_MineCoalSeam").text();// ¿ª²ÉÃº²ã';
-		String cmgy = doc.getElementById("td_MiningTech").text();// ²ÉÃº¹¤ÒÕ';
-		String ysfs = doc.getElementById("td_MineTraffic").text();// ÔËÊä·½Ê½';
-		String jxdyrs = doc.getElementById("td_MineWorker").text();// ¾®ÏÂ¶¨Ô±ÈËÊı';
-		String zymz = doc.getElementById("td_MineCoalGrade").text();// Ö÷ÒªÃºÖÖ';
-		String mkgdfs = doc.getElementById("td_MineGdMethod").text();// Ãº¿ó¹©µç·½Ê½';
+		String zhuangtai = doc.getElementById("td_MineState").text();// ç…¤çŸ¿çŠ¶æ€';
+		String mksjscnl = doc.getElementById("td_MineSj").text();// ç…¤çŸ¿è®¾è®¡ç”Ÿäº§èƒ½åŠ›';
+		String mkhdscnl = doc.getElementById("td_MineHd").text();// ç…¤çŸ¿æ ¸å®šç”Ÿäº§èƒ½åŠ›';
+		String mksykccl = doc.getElementById("td_MineRemain").text();// ç…¤çŸ¿å‰©ä½™å¯é‡‡å‚¨é‡';
+		String mktcsj = doc.getElementById("td_MinePTime").text();// ç…¤çŸ¿æŠ•äº§æ—¶é—´';
+		String ktfs = doc.getElementById("td_MineOpening").text();// å¼€æ‹“æ–¹å¼';
+		String kcmc = doc.getElementById("td_MineCoalSeam").text();// å¼€é‡‡ç…¤å±‚';
+		String cmgy = doc.getElementById("td_MiningTech").text();// é‡‡ç…¤å·¥è‰º';
+		String ysfs = doc.getElementById("td_MineTraffic").text();// è¿è¾“æ–¹å¼';
+		String jxdyrs = doc.getElementById("td_MineWorker").text();// äº•ä¸‹å®šå‘˜äººæ•°';
+		String zymz = doc.getElementById("td_MineCoalGrade").text();// ä¸»è¦ç…¤ç§';
+		String mkgdfs = doc.getElementById("td_MineGdMethod").text();// ç…¤çŸ¿ä¾›ç”µæ–¹å¼';
 
-		String aqjkxt = doc.getElementById("td_GasJIANKONG").text();// °²È«¼à¿ØÏµÍ³';
-		String wscfxt = doc.getElementById("td_GasCHOUFANG").text();// ÍßË¹³é·ÅÏµÍ³';
-		String wsdj = doc.getElementById("td_GasGrade").text();// ÍßË¹µÈ¼¶';
-		String mcdzrqxx = doc.getElementById("td_CoalFire").text();// Ãº²ãµÄ×ÔÈ¼ÇãÏòĞÔ';
-		String mcbzwxx = doc.getElementById("td_CoalBlast").text();// Ãº²ãµÄ±¬Õ¨Î£ÏÕĞÔ';
-		String cjdy = doc.getElementById("td_MineCjdy").text();// ³å»÷µØÑ¹';
-		String mcddbyx = doc.getElementById("td_Mineddb").text();// Ãº²ã¶¥µ×°åÑÒĞÔ';
-		String kjswdzlx = doc.getElementById("td_HydroGeoType").text();// ¿ó¾®Ë®ÎÄµØÖÊÀàĞÍ';
+		String aqjkxt = doc.getElementById("td_GasJIANKONG").text();// å®‰å…¨ç›‘æ§ç³»ç»Ÿ';
+		String wscfxt = doc.getElementById("td_GasCHOUFANG").text();// ç“¦æ–¯æŠ½æ”¾ç³»ç»Ÿ';
+		String wsdj = doc.getElementById("td_GasGrade").text();// ç“¦æ–¯ç­‰çº§';
+		String mcdzrqxx = doc.getElementById("td_CoalFire").text();// ç…¤å±‚çš„è‡ªç‡ƒå€¾å‘æ€§';
+		String mcbzwxx = doc.getElementById("td_CoalBlast").text();// ç…¤å±‚çš„çˆ†ç‚¸å±é™©æ€§';
+		String cjdy = doc.getElementById("td_MineCjdy").text();// å†²å‡»åœ°å‹';
+		String mcddbyx = doc.getElementById("td_Mineddb").text();// ç…¤å±‚é¡¶åº•æ¿å²©æ€§';
+		String kjswdzlx = doc.getElementById("td_HydroGeoType").text();// çŸ¿äº•æ°´æ–‡åœ°è´¨ç±»å‹';
 
-		String aqbh = doc.getElementById("td_SafeLicenseCode").text();// °²È«Éú²úĞí¿ÉÖ¤-±àºÅ';
-		String aqzt = doc.getElementById("td_SafeLicenseState").text();// °²È«Éú²úĞí¿ÉÖ¤-×´Ì¬';
-		String aqbzjg = doc.getElementById("td_SafeLicenseOrg").text();// °²È«Éú²úĞí¿ÉÖ¤-°äÖ¤»ú¹¹';
-		String aqyxq = doc.getElementById("td_SafeLicenseTime").text();// °²È«Éú²úĞí¿ÉÖ¤-ÓĞĞ§ÆÚ';start-end
-																		// start¾ÍÊÇ°äÖ¤ÈÕÆÚ
+		String aqbh = doc.getElementById("td_SafeLicenseCode").text();// å®‰å…¨ç”Ÿäº§è®¸å¯è¯-ç¼–å·';
+		String aqzt = doc.getElementById("td_SafeLicenseState").text();// å®‰å…¨ç”Ÿäº§è®¸å¯è¯-çŠ¶æ€';
+		String aqbzjg = doc.getElementById("td_SafeLicenseOrg").text();// å®‰å…¨ç”Ÿäº§è®¸å¯è¯-é¢è¯æœºæ„';
+		String aqyxq = doc.getElementById("td_SafeLicenseTime").text();// å®‰å…¨ç”Ÿäº§è®¸å¯è¯-æœ‰æ•ˆæœŸ';start-end
+																		// startå°±æ˜¯é¢è¯æ—¥æœŸ
 
-		String gszch = doc.getElementById("td_gcCode").text();// ¹¤ÉÌÓªÒµÖ´ÕÕ-×¢²áºÅ';
-		String gsbzjg = doc.getElementById("td_gcOrg").text();// ¹¤ÉÌÓªÒµÖ´ÕÕ-°äÖ¤»ú¹¹';
+		String gszch = doc.getElementById("td_gcCode").text();// å·¥å•†è¥ä¸šæ‰§ç…§-æ³¨å†Œå·';
+		String gsbzjg = doc.getElementById("td_gcOrg").text();// å·¥å•†è¥ä¸šæ‰§ç…§-é¢è¯æœºæ„';
 		String gsbzrq = "";// doc.getElementById("td_gcEndTime").text();//
-							// ¹¤ÉÌÓªÒµÖ´ÕÕ-°äÖ¤ÈÕÆÚ';
-		String gsyxq = doc.getElementById("td_gcEndTime").text();// ¹¤ÉÌÓªÒµÖ´ÕÕ-ÓĞĞ§ÆÚ';
+							// å·¥å•†è¥ä¸šæ‰§ç…§-é¢è¯æ—¥æœŸ';
+		String gsyxq = doc.getElementById("td_gcEndTime").text();// å·¥å•†è¥ä¸šæ‰§ç…§-æœ‰æ•ˆæœŸ';
 
-		String ckzh = doc.getElementById("td_ckCode").text();// ²É¿óĞí¿ÉÖ¤-Ö¤ºÅ';
-		String ckbzjg = doc.getElementById("td_ckOrg").text();// ²É¿óĞí¿ÉÖ¤-°äÖ¤»ú¹¹';
+		String ckzh = doc.getElementById("td_ckCode").text();// é‡‡çŸ¿è®¸å¯è¯-è¯å·';
+		String ckbzjg = doc.getElementById("td_ckOrg").text();// é‡‡çŸ¿è®¸å¯è¯-é¢è¯æœºæ„';
 		String ckbzrq = "";// doc.getElementById("aaaaaa").text();//
-							// ²É¿óĞí¿ÉÖ¤-°äÖ¤ÈÕÆÚ';
-		String ckyxq = doc.getElementById("td_ckEndTime").text();// ²É¿óĞí¿ÉÖ¤-ÓĞĞ§ÆÚ';
+							// é‡‡çŸ¿è®¸å¯è¯-é¢è¯æ—¥æœŸ';
+		String ckyxq = doc.getElementById("td_ckEndTime").text();// é‡‡çŸ¿è®¸å¯è¯-æœ‰æ•ˆæœŸ';
 
-		String mtzh = doc.getElementById("td_coalCode").text();// ÃºÌ¿Éú²úĞí¿ÉÖ¤-Ö¤ºÅ';
-		String mtbzjg = doc.getElementById("td_coalOrg").text();// ÃºÌ¿Éú²úĞí¿ÉÖ¤-°äÖ¤»ú¹¹';
+		String mtzh = doc.getElementById("td_coalCode").text();// ç…¤ç‚­ç”Ÿäº§è®¸å¯è¯-è¯å·';
+		String mtbzjg = doc.getElementById("td_coalOrg").text();// ç…¤ç‚­ç”Ÿäº§è®¸å¯è¯-é¢è¯æœºæ„';
 		String mtbzrq = "";// doc.getElementById("aaaaaa").text();//
-							// ÃºÌ¿Éú²úĞí¿ÉÖ¤-°äÖ¤ÈÕÆÚ';
-		String mtyxq = doc.getElementById("td_coalEndTime").text();// ÃºÌ¿Éú²úĞí¿ÉÖ¤-ÓĞĞ§ÆÚ';
+							// ç…¤ç‚­ç”Ÿäº§è®¸å¯è¯-é¢è¯æ—¥æœŸ';
+		String mtyxq = doc.getElementById("td_coalEndTime").text();// ç…¤ç‚­ç”Ÿäº§è®¸å¯è¯-æœ‰æ•ˆæœŸ';
 
-		String kzbh = doc.getElementById("kzzgID").text();// ¿ó³¤×Ê¸ñÖ¤-±àºÅ';
-		String kzbzjg = doc.getElementById("kzzgOrg").text();// ¿ó³¤×Ê¸ñÖ¤-°äÖ¤»ú¹¹';
-		String kzxm = doc.getElementById("kzzgName").text();// ¿ó³¤×Ê¸ñÖ¤-ĞÕÃû';
-		String kzyxq = doc.getElementById("kzzgEndTime").text();// ¿ó³¤×Ê¸ñÖ¤-ÓĞĞ§ÆÚ';
+		String kzbh = doc.getElementById("kzzgID").text();// çŸ¿é•¿èµ„æ ¼è¯-ç¼–å·';
+		String kzbzjg = doc.getElementById("kzzgOrg").text();// çŸ¿é•¿èµ„æ ¼è¯-é¢è¯æœºæ„';
+		String kzxm = doc.getElementById("kzzgName").text();// çŸ¿é•¿èµ„æ ¼è¯-å§“å';
+		String kzyxq = doc.getElementById("kzzgEndTime").text();// çŸ¿é•¿èµ„æ ¼è¯-æœ‰æ•ˆæœŸ';
 
-		String kzaqbh = doc.getElementById("td_kzCode").text();// ¿ó³¤°²È«×Ê¸ñÖ¤-±àºÅ';
-		String kzaqbzjg = doc.getElementById("td_kzOrg").text();// ¿ó³¤°²È«×Ê¸ñÖ¤-°äÖ¤»ú¹¹';
-		String kzaqxm = doc.getElementById("td_kzName").text();// ¿ó³¤°²È«×Ê¸ñÖ¤-ĞÕÃû';
-		String kzaqyxq = doc.getElementById("td_kzEndTime").text();// ¿ó³¤°²È«×Ê¸ñÖ¤-ÓĞĞ§ÆÚ';
+		String kzaqbh = doc.getElementById("td_kzCode").text();// çŸ¿é•¿å®‰å…¨èµ„æ ¼è¯-ç¼–å·';
+		String kzaqbzjg = doc.getElementById("td_kzOrg").text();// çŸ¿é•¿å®‰å…¨èµ„æ ¼è¯-é¢è¯æœºæ„';
+		String kzaqxm = doc.getElementById("td_kzName").text();// çŸ¿é•¿å®‰å…¨èµ„æ ¼è¯-å§“å';
+		String kzaqyxq = doc.getElementById("td_kzEndTime").text();// çŸ¿é•¿å®‰å…¨èµ„æ ¼è¯-æœ‰æ•ˆæœŸ';
 		String sql = "INSERT INTO `mk` VALUES ('" + id + "','" + mc + "','"
 				+ zuobiao + "','" + fuzerenl + "','" + leibie + "','" + dianhua
 				+ "','" + youbian + "','" + dizhi + "','" + zhuangtai + "','"
