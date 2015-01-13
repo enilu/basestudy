@@ -69,6 +69,20 @@ public class Main {
 	 * 2,控制台接收用户输入验证码<测试用，实际项目中接收用户从页面输入的验证码><br>
 	 * 3,根据车号，或票号，验证码，提交查询请求<br>
 	 * 4,处理请求返回的结果<br>
+	 * 4.1,失败结果：{"message":"货车追踪失败，请稍后再试！","object":null,"success":false}<br>
+	 * 4.2,验证码错误：{"message":"验证码输入错误！","object":null,"success":false} <br>
+	 * {"message":"操作成功","object":[{"bDataVaild":true,"carKind":"敞车","carLE":"L"
+	 * ,"carNo":"1702092","carType":"C70","cdyAdm":"北京局","cdyName":"末煤",
+	 * "cdyStation"
+	 * :"阳泉","conName":"天津阳煤煤炭销售有限公司","destAdm":"济南局","destStation":
+	 * "聊城","dz":"",
+	 * "dzlc":6,"errorMsg":"","eventAdm":"济南局","eventCity":"聊城市","eventDate"
+	 * :"2015- 01-12
+	 * 22:24:00","eventProvince":"山东省","eventStation":"聊城北","fz":"","
+	 * pm":"","shpName
+	 * ":"","trainId":"29401","trainOrder":"27","tyrName":"","wbID":"Q0615
+	 * 27","wbNbr":"Q061527","xh":"","xt":""}],"success":true}
+	 * </p>
 	 * 
 	 * </p>
 	 * 
@@ -87,10 +101,13 @@ public class Main {
 		String captca = s.nextLine();
 
 		// 3,
+		/**
+		 * 1, 货票号：Q061527 车号：C70E1702092 2, 货票号：Q061528 车号：C701602774
+		 **/
 		HttpPost post = new HttpPost(queryUrl);
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
-		params.add(new BasicNameValuePair("carNo", "c62bk"));
-		params.add(new BasicNameValuePair("hph", "4942009"));
+		params.add(new BasicNameValuePair("carNo", "1602774"));// q506,q061527
+		params.add(new BasicNameValuePair("hph", "Q061528"));//
 		params.add(new BasicNameValuePair("QUERY_CAPTCA", captca));
 		post.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
 		HttpResponse response = client.execute(post);

@@ -33,6 +33,65 @@ public class Main {
 		}
 	}
 
+	/**
+	 * <p>
+	 * 查询参数： <br>
+	 * fz:AQP<br>
+	 * fzljm:00003<br>
+	 * dz:UCK<br>
+	 * dzljm:00006<br>
+	 * cx:C80<br>
+	 * zl:80<br>
+	 * rq:20150113<br>
+	 * bjfl:4<br>
+	 * bjje:0<br>
+	 * hwzl:0<br>
+	 * pz:1<br>
+	 * pm:2113010<br>
+	 * xx:<br>
+	 * zxbj:<br>
+	 * zbbj:<br>
+	 * csxs:1<br>
+	 * fsmbj:0<br>
+	 * fsmlc:0<br>
+	 * dsmbj:0<br>
+	 * dsmlc:0<br>
+	 * fzyxbj:0<br>
+	 * fzyxlc:0<br>
+	 * dzyxbj:0<br>
+	 * dzyxlc:0<br>
+	 * fzyxdm:0<br>
+	 * dzyxdm:<br>
+	 * dfxcbj:0<br>
+	 * fsybj:0<br>
+	 * dsybj:0<br>
+	 * fzcbj:1<br>
+	 * dzcbj:1<br>
+	 * fsmzxbj:0<br>
+	 * dsmzxbj:0<br>
+	 * </p>
+	 * <p>
+	 * 查询结果： <br>
+	 * {
+	 * 'YDQX':{'Name':'运到期限','Value':'3'},'YSZ':{'Name':'运算至','Value':''},'return':{'Code':'11','Message':'费用查询成功!'},'LCs':{'JLC':{'Name':'','Value':'417'},'DLC':{'Name':'','Value':'417'},'ZLC':{'Name':'','Value':'417'}},'FYs':{KM:[{'Name':'运费','Code':'005','Value':'420900'},{'Name':'发站装卸费','Code':'898','Value':'134400'},{'Name':'全程总计','Code':'998','Value':'829520'},{'Name':'京九分流运费','Code':'312','Value':'7390'},{'Name':'发站费用合计','Code':'999','Value':'829520'},{'Name':'印花税','Code':'009','Value':'230'},{'Name':'到站卸车费','Code':'899','Value':'116480'},{'Name':'铁路建设基金','Code':'020','Value':'110090'},{'Name':'电气化附加费','Code':'010','Value':'40030'
+	 * } ] } , }
+	 * <p>
+	 * <p>
+	 * 解析结果<br>
+	 * 运到期限：3天 <br>
+	 * 铁路里程：417公里<br>
+	 * 运费：4209元 <br>
+	 * 发站装卸费：1344元<br>
+	 * 京九分流运费：73.9元<br>
+	 * 印花税：2.3元<br>
+	 * 到站卸车费：1164.8<br>
+	 * 铁路建设基金：1100.9元 <br>
+	 * 电气化附加费：400.3元 <br>
+	 * 费用合计：8295.2元
+	 * <p>
+	 * 
+	 * @throws Exception
+	 */
 	public void collector() throws Exception {
 		Document doc = Jsoup.connect("http://dynamic.12306.cn/yjcx/doPthwjf")
 				.data("fz", "TYV").data("fzljm", "00016").data("dz", "NJH")
@@ -48,39 +107,5 @@ public class Main {
 				.data("fsmzxbj", "0").data("dsmzxbj", "0").timeout(60000)
 				.post();
 		System.out.println(doc.text());
-		// fz:TYV
-		// fzljm:00016
-		// dz:NJH
-		// dzljm:00007
-		// cx:C80
-		// zl:80
-		// rq:20150112
-		// bjfl:4
-		// bjje:0
-		// hwzl:0
-		// pz:1
-		// pm:0110006
-		// xx:
-		// zxbj:
-		// zbbj:
-		// csxs:1
-		// fsmbj:0
-		// fsmlc:0
-		// dsmbj:0
-		// dsmlc:0
-		// fzyxbj:0 ddd
-		// fzyxlc:0
-		// dzyxbj:0
-		// dzyxlc:0
-		// fzyxdm:0
-		// dzyxdm:
-		// dfxcbj:0
-		// fsybj:0
-		// dsybj:0
-		// fzcbj:1
-		// dzcbj:1
-		// fsmzxbj:0
-		// dsmzxbj:0
-
 	}
 }
